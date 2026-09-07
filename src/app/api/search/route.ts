@@ -11,9 +11,17 @@ export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   const authInfo = getAuthInfoFromCookie(request);
-  if (!authInfo || !authInfo.username) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+
+if (!authInfo) {
+  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+}
+
+const storageType =
+  process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
+
+if (storageType !== 'localstorage' && !authInfo.username) {
+  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+}
 
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
@@ -34,7 +42,9 @@ export async function GET(request: NextRequest) {
   }
 
   const config = await getConfig();
-  const apiSites = await getAvailableApiSites(authInfo.username);
+  const apiSites = await getAvailableApiSites(
+  authInfo.username || process.env.USERNAME || ''
+);
 
   // 添加超时控制和错误处理，避免慢接口拖累整体响应
   const searchPromises = apiSites.map((site) =>
