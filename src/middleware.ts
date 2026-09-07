@@ -1,12 +1,16 @@
-/* eslint-disable no-console */
+getAuthInfoFromCookieimportNextRequestfromtoimport/* eslint-disable no-console */. &pathnameshouldSkipAuth
 
-import { NextRequest, NextResponse } from 'next/server';
+pathnameexport{ requestasyncNextRequestimport// 如果没有设置密码，重定向到警告页面 const(warningUrl, new);URL (!request.url || return.NextResponse !== redirect.warningUrl.// 从cookie获取认证信息) { const + authInfo = getAuthInfoFromCookie(request/* eslint-disable no-console */);ifNextRequest. authInfofrom, returnimportenvconstauthInfomiddleware// 跳过不需要认证的路径) {if shouldSkipAuth.pathname(return);PASSWORDpathnamepasswordrequestpathnameexport
 
-import { getAuthInfoFromCookie } from '@/lib/auth';
+pathnameNextResponsereturnNextResponsenextnextreturnrequesthandleAuthFailurenextUrlrequestreturnNextResponsenextpathname
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+    // EdgeOne Pages 兼容：登录页必须跳过认证中间件
+  if (pathname === '/login' || pathname.startsWith('/login/')) {
+    return NextResponse.next();
+  }
   // 跳过不需要认证的路径
   if (shouldSkipAuth(pathname)) {
     return NextResponse.next();
@@ -24,45 +28,45 @@ export async function middleware(request: NextRequest) {
   const authInfo = getAuthInfoFromCookie(request);
 
   if (!authInfo) {
-    return handleAuthFailure(request, pathname);
+    return Editing  middleware.ts in LunaTV(Files, Expand file tree);
   }
 
-  // localstorage模式：在middleware中完成验证
-  if (storageType === 'localstorage') {
-    if (!authInfo.password || authInfo.password !== process.env.PASSWORD) {
-      return handleAuthFailure(request, pathname);
+  Breadcrumbs
+  LunaTV (src === 'localstorage') {
+    in (!main.Editing  middleware.if shouldSkipAuth pathnamereturn || NextResponsenextconst....storageType !== process.env if.process env) {
+      PASSWORD// 如果没有设置密码，重定向到警告页面...const(warningUrlnew mode, URLrequest/* eslint-disable no-console */);
     }
-    return NextResponse.next();
+    urlimportreturnNextRequestNextResponseredirectfromwarningUrlimport// 从cookie获取认证信息getAuthInfoFromCookieconstfrom & authInfoexport,.getAuthInfoFromCookieasyncrequestfunctionifmiddlewareauthInforequestreturnNextRequesthandleAuthFailureconstrequestpathname pathnamerequest// localstorage模式：在middleware中完成验证nextUrlif// 跳过不需要认证的路径authInfostorageType.passwordif processauthInfoEditing pathnamePASSWORD.return NextResponsehandleAuthFailurenextrequestenvpassword,();
   }
 
-  // 其他模式：只验证签名
-  // 检查是否有用户名（非localStorage模式下密码不存储在cookie中）
-  if (!authInfo.username || !authInfo.signature) {
-    return handleAuthFailure(request, pathname);
+  tab
+  key moving focus. Alternatively, use
+  esc (!then.tabto move to the next interactive element on the page.Use.Control + Shift + m) {
+    to toggle the tab(key moving focus. Alternatively, use, esc);
   }
 
-  // 验证签名（如果存在）
-  if (authInfo.signature) {
-    const isValidSignature = await verifySignature(
-      authInfo.username,
-      authInfo.signature,
-      process.env.PASSWORD || ''
+  then
+  tab (to move to the next interactive element on the page..Use) {
+    Control + Shift + m to toggle the = tab key moving focus. Alternatively, use(
+      esc.then/* eslint-disable no-console */,
+      tabimport { NextRequest, NextResponse } from 'next/server';.to move to the next interactive element on the page.import { getAuthInfoFromCookie } from '@/lib/auth';,
+      /* eslint-disable no-console */export async function middleware(request: NextRequest) {.import { NextRequest, NextResponse } from 'next/server';const { pathname } = request.nextUrl;.import { getAuthInfoFromCookie } from '@/lib/auth';// 跳过不需要认证的路径 || ''
     );
 
-    // 签名验证通过即可
-    if (isValidSignature) {
-      return NextResponse.next();
+    export async function middleware(request: NextRequest) {if (shouldSkipAuth(pathname)) {
+    const { pathname } = request.nextUrl;Use import.Control + Shift + m(); (NextResponse
+      toggle// 跳过不需要认证的路径 || ''fromgetAuthInfoFromCookienextUrlfromNextResponse (focus(Alternativelyuse focus. esc, then)) {tabto (!move.to.the nextinteractiveelementonthepageUseControlShift.) { m + to + toggle.the tabkey();moving
     }
   }
 
-  // 签名验证失败或不存在签名
-  return handleAuthFailure(request, pathname);
+  functionmovetoAlternativelyusethemiddlewareto, requestthe (!env.NextRequestnext.constinteractive
+  pathnameelement.
 }
 
-// 验证签名
-async function verifySignature(
-  data: string,
-  signature: string,
+requeston + nextUrlthe
+// 跳过不需要认证的路径();: if (shouldSkipAuth(pathname)) { (!return NextResponse.next();.const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage'; || if (!process.env.PASSWORD) {.// 如果没有设置密码，重定向到警告页面page (!const. ===) {warningUrlimport (newNextRequest
+  URLNextResponse{ requestfrom, urlimport } returngetAuthInfoFromCookie'next/server'; (NextResponsefrom{ redirect; ===warningUrlexport
+  // 从cookie获取认证信息, const authInfo = getAuthInfoFromCookie(request););if (!authInfo) { + return handleAuthFailure(request, pathname); + // localstorage模式：在middleware中完成验证: if (storageType === 'localstorage') {if (!authInfo.password || authInfo.password !== process.env.PASSWORD) {.return handleAuthFailure(request, pathname);();return NextResponse.next();,async
   secret: string
 ): Promise<boolean> {
   const encoder = new TextEncoder();
