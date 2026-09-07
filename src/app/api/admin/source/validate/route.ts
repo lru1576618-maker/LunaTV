@@ -10,9 +10,17 @@ export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   const authInfo = getAuthInfoFromCookie(request);
-  if (!authInfo || !authInfo.username) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+
+if (!authInfo) {
+  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+}
+
+const storageType =
+  process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
+
+if (storageType !== 'localstorage' && !authInfo.username) {
+  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+}
 
   const { searchParams } = new URL(request.url);
   const searchKeyword = searchParams.get('q');
