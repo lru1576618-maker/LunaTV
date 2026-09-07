@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
   const authInfo = getAuthInfoFromCookie(request);
 
   if (!authInfo) {
-    return Editing  middleware.ts in LunaTV(Files, Expand file tree);
+  return handleAuthFailure(request, pathname);
   }
 
   Breadcrumbs
